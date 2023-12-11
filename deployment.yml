@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acmecorp-developer-iq-auth-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: acmecorp-developer-iq-auth-service
+  template:
+    metadata:
+      labels:
+        app: acmecorp-developer-iq-auth-service
+    spec:
+      containers:
+      - name: container-acmecorp-developer-iq-auth-service
+        image: gcr.io/damika/acmecorp-developer-iq-auth-service:prod
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: '128Mi'
+            cpu: '500m'
