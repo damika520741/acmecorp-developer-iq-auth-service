@@ -24,7 +24,7 @@ jobs:
       run: docker run --rm test/$IMAGE:$TAG /bin/sh -c 'pip install -r requirements.txt && pytest'
 
     - name: login docker hub    
-      run: docker login --username "${{secrets.DOCKER_HUB_USERNAME}}" --password ${{secrets.DOCKER_HUB_PASSWORD}}
+      run: docker login --username ${{secrets.DOCKER_HUB_USERNAME}} --password ${{secrets.DOCKER_HUB_PASSWORD}}
 
     - name: build docker image
       run: docker build -t damika/$IMAGE:$TAG .
