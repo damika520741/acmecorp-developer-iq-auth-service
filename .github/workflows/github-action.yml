@@ -27,10 +27,10 @@ jobs:
       run: docker login --username ${{secrets.DOCKER_HUB_USERNAME}} --password ${{secrets.DOCKER_HUB_PASSWORD}}
 
     - name: build docker image
-      run: docker build -t damika/$IMAGE:$TAG .
+      run: docker build -t $IMAGE:$TAG .
 
     - name: push docker image to docker hub
-      run: docker push damika/$IMAGE:$TAG
+      run: docker push ${{secrets.DOCKER_HUB_USERNAME}}/$IMAGE:$TAG
 
     - name: set up gcloud CLI
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@0.1.3
@@ -57,10 +57,10 @@ jobs:
       run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
 
     - name: build docker image
-      run: docker build -t gcr.io/damika/$IMAGE:$TAG .
+      run: docker build -t gcr.io/${{secrets.PROJECT_ID}}/$IMAGE:$TAG .
 
     - name: push docker image to GCR
-      run: docker push gcr.io/damika/$IMAGE:$TAG
+      run: docker push gcr.io/${{secrets.PROJECT_ID}}/$IMAGE:$TAG
 
     - name: apply deployment artifacts
       run: kubectl apply -f deployment.yml

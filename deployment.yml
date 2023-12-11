@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: container-acmecorp-developer-iq-auth-service
-        image: gcr.io/damika/acmecorp-developer-iq-auth-service:prod
+        image: gcr.io/acmecorp-developer-iq/acmecorp-developer-iq-auth-service:prod
         imagePullPolicy: Always
         resources:
           limits:
