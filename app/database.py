@@ -8,6 +8,7 @@ SELECT_APPLICATION_USER_BY_USERNAME = """
 SELECT * FROM application_user WHERE username = :username
 """
 
-url = f"postgresql://postgres:damika@localhost:5432/developer-iq"
+# url = f"postgresql://postgres:damika@localhost:5432/developer-iq"
+url = f"postgresql://postgres:damika@34.69.71.96:5432/developer-iq"
 
 connection = Database(url)
