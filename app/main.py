@@ -18,5 +18,3 @@ app.include_router(router, prefix="/auth")
 # if __name__ == "__main__":
 #     from uvicorn import run
 #     run("main:app", host="localhost", port=84, reload=True)
-
-# ----- damika fonseka -----
