@@ -54,7 +54,8 @@ jobs:
       run: gcloud --quiet auth configure-docker
 
     - name: get GKE credentials
-      run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
+      # run: gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE
+      run: gcloud container clusters get-credentials cluster-acmecorp-developer-iq-1 --zone us-central1-c --project acmecorp-developer-iq
 
     - name: build docker image
       run: docker build -t gcr.io/${{secrets.PROJECT_ID}}/$IMAGE:$TAG .
