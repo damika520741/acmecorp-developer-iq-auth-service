@@ -1,7 +1,7 @@
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from jwt import encode
-from fastapi import status
+from fastapi import HTTPException, status
 from model import User
 from database import connection
 from database import INSERT_APPLICATION_USER, SELECT_APPLICATION_USER_BY_USERNAME
@@ -21,7 +21,7 @@ async def signup(user: User):
         if result:
             return dict(
                 is_success=False,
-                status_code= status.HTTP_400_BAD_REQUEST,
+                status_code=status.HTTP_200_OK,
                 message="This username already exists.",
                 data=None
             )
@@ -33,15 +33,15 @@ async def signup(user: User):
             if result:
                 return dict(
                     is_success=True,
-                    status_code= status.HTTP_200_OK,
+                    status_code=status.HTTP_200_OK,
                     message="You have registerd successfuly.",
                     data=user.username
                 )
-    except Exception as e:
+    except HTTPException as e:
         return dict(
             is_success=False,
-            status_code= status.HTTP_500_INTERNAL_SERVER_ERROR,
-            message=str(e),
+            status_code=e.status_code,
+            message=e.args[1-1] if e.args else None,
             data=None
         )
     finally:
@@ -58,29 +58,29 @@ async def signin(user: User):
                 token = generate_token(user.username)
                 return dict(
                     is_success=True,
-                    status_code= status.HTTP_200_OK,
+                    status_code=status.HTTP_200_OK,
                     message="You have logged in successfuly.",
                     data=dict(token=token, type="bearer")
                 )
             else:
                 return dict(
                     is_success=False,
-                    status_code= status.HTTP_400_BAD_REQUEST,
+                    status_code=status.HTTP_200_OK,
                     message="Password is incorrect.",
                     data=None
                 )
         else:
             return dict(
                 is_success=False,
-                status_code= status.HTTP_400_BAD_REQUEST,
+                status_code=status.HTTP_200_OK,
                 message="Username is incorrect.",
                 data=None
             )
-    except Exception as e:
+    except HTTPException as e:
         return dict(
             is_success=False,
-            status_code= status.HTTP_500_INTERNAL_SERVER_ERROR,
-            message=str(e),
+            status_code=e.status_code,
+            message=e.args[1-1] if e.args else None,
             data=None
         )
     finally:
